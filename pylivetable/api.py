@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
-
+# TODO add comment
 
 from .models import Categories
 
 
 def categories(site='all'):
-    '''
-    TODO
-    :param site:
-    :return:
-    '''
+    # TODO add comment
     cate = Categories()
     return cate.get(site)
 

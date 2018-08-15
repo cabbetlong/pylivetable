@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 __title__ = 'pylivetable'
 __description__ = 'A tool for get Chinese Live website datas.'
 __url__ = 'https://github.com/cabbetlong/pylivetable'

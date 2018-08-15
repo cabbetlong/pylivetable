@@ -1,30 +1,22 @@
 # -*- coding: utf-8 -*-
+# TODO add comment
 
 from bs4 import BeautifulSoup
 from .http import get_content
 
 
 class Douyu(object):
-    '''
-    TODO
-    '''
+    # TODO add comment
     CATEGORIES_URL = 'https://www.douyu.com/directory'
 
     def get_categories(self):
-        '''
-        TODO
-        :return:
-        '''
+        # TODO add comment
         # get html of http response
         content = get_content(Douyu.CATEGORIES_URL)
         return self._parse_catecontent(content)
 
     def _parse_catecontent(self, content):
-        '''
-        TODO
-        :param content:
-        :return:
-        '''
+        # TODO add comment &
         cate_names = []
         cate_gameid = []
         cate_href = []
@@ -39,26 +31,17 @@ class Douyu(object):
 
 
 class Huya(object):
-    '''
-    TODO
-    '''
+    # TODO add comment &
     CATEGORIES_URL = 'https://www.huya.com/g'
 
     def get_categories(self):
-        '''
-        TODO
-        :return:
-        '''
+        # TODO add comment
         # get html of http response
         content = get_content(Huya.CATEGORIES_URL)
         return self._parse_catecontent(content)
 
     def _parse_catecontent(self, content):
-        '''
-        TODO
-        :param content:
-        :return:
-        '''
+        # TODO add comment
         cate_names = []
         cate_gameid = []
         cate_href = []

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+# TODO add comment
 
 import pandas as pd
 from .livesites import Douyu, Huya
@@ -12,52 +12,34 @@ SITES = {
 
 
 class Categories(object):
-    '''
-    TODO
-    '''
+    # TODO add comment
     COLUMNS = ['name', 'game_id', 'href']
 
     def __init__(self):
         pass
 
     def get(self, site):
-        '''
-        TODO
-        :param site:
-        :return:
-        '''
+        # TODO add comment
         # choose site
         if site is 'all':
-            columns = ([], [], [])
-            names, game_ids, hrefs = columns
+            data = dict()
             for _site in SITES:
-                name, game_id, href = self._get_columns(_site)
-                names.append(name)
-                game_ids.append(game_id)
-                hrefs.append(href)
-                return self._gen_dataframe(columns)
+                data.update(self._get_data(_site))
+            return self._gen_dataframe(data)
         else:
-            columns = self._get_columns(site)
+            columns = self._get_data(site)
             return self._gen_dataframe(columns)
 
-    def _get_columns(self, site):
-        '''
-        TODO
-        :param site:
-        :return:
-        '''
+    def _get_data(self, site):
+        # TODO add comment
         if site not in SITES: raise Exception
         site_class = SITES[site.lower()]
 
         columns = site_class().get_categories()
-        return columns
+        data = {site.lower(): dict(zip(Categories.COLUMNS, columns))}
+        return data
 
-    def _gen_dataframe(self, columns):
-        '''
-        TODO
-        :return:
-        '''
-        datas = dict(zip(Categories.COLUMNS, columns))
-        cate_df = pd.DataFrame(datas)
-
+    def _gen_dataframe(self, data):
+        # TODO add comment
+        cate_df = pd.DataFrame(data)
         return cate_df
