@@ -18,13 +18,6 @@ class TestRequests:
         assert len(categories) > 0
         return True
 
-    def test_categories_all(self):
-        # TODO add comment
-        res = pylivetable.categories()
-        print(res)
-        assert len(res['douyu']) > 0
-        assert len(res['huya']) > 0
-
     def test_categories_douyu(self):
         # TODO add comment
         assert self.test_categories('douyu')
@@ -32,3 +25,10 @@ class TestRequests:
     def test_categories_huya(self):
         # TODO add comment
         assert self.test_categories('huya')
+
+    def test_categories_all(self):
+        # TODO add comment
+        res = pylivetable.categories()
+        print(res)
+        assert len(res.loc['douyu']) == len(pylivetable.categories('douyu'))
+        assert len(res.loc['huya']) == len(pylivetable.categories('huya'))

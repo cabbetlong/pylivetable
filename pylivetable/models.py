@@ -3,6 +3,7 @@
 
 import pandas as pd
 from .livesites import Douyu, Huya
+from collections import defaultdict
 
 
 SITES = {
@@ -21,25 +22,34 @@ class Categories(object):
     def get(self, site):
         # TODO add comment
         # choose site
+        data = defaultdict(list)
+        index = [[], []]
         if site is 'all':
-            data = dict()
+            index_len = 0
             for _site in SITES:
-                data.update(self._get_data(_site))
-            return self._gen_dataframe(data)
+                lenth, dataofsite = self._get_data(_site)
+                for key, value in zip(Categories.COLUMNS, dataofsite):
+                    data[key].extend(value)
+                index[0].extend([_site for _ in range(lenth)])
+                index[1].extend([i for i in range(index_len, index_len + lenth)])
+                index_len += lenth
+            return self._gen_dataframe(data, index)
         else:
-            columns = self._get_data(site)
-            return self._gen_dataframe(columns)
+            lenth, data = self._get_data(site)
+            index[0].extend([site for _ in range(lenth)])
+            index[1].extend([i for i in range(lenth)])
+            return self._gen_dataframe(dict(zip(Categories.COLUMNS, data)), index)
 
     def _get_data(self, site):
         # TODO add comment
         if site not in SITES: raise Exception
-        site_class = SITES[site.lower()]
+        site_class = SITES[site]
 
-        columns = site_class().get_categories()
-        data = {site.lower(): dict(zip(Categories.COLUMNS, columns))}
-        return data
+        data = site_class().get_categories()
+        lenth = len(data[0])
+        return lenth, data
 
-    def _gen_dataframe(self, data):
+    def _gen_dataframe(self, data, index):
         # TODO add comment
-        cate_df = pd.DataFrame(data)
+        cate_df = pd.DataFrame(data, index=index)
         return cate_df
