@@ -11,7 +11,7 @@ def get_content(url):
     :return:
     '''
     try:
-        return rq.get('https://www.douyu.com/directory').text
+        return rq.get(url).text
     except Exception as e:
         print(e)
         return None

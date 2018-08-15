@@ -2,16 +2,19 @@
 
 
 import pandas as pd
-from .livesites import Douyu
+from .livesites import Douyu, Huya
 
 
 SITES = {
-    'douyu': Douyu
+    'douyu': Douyu,
+    'huya': Huya,
 }
 
 
 class Categories(object):
-
+    '''
+    TODO
+    '''
     COLUMNS = ['name', 'game_id', 'href']
 
     def __init__(self):
