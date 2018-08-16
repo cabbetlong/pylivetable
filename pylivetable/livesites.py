@@ -23,7 +23,7 @@ class Douyu(object):
         return self._parse_catecontent(content)
 
     def _parse_catecontent(self, content):
-        # TODO add comment &
+        # TODO add comment & parse rule extraction
         cate_names = []
         cate_gameid = []
         cate_href = []
@@ -48,7 +48,7 @@ class Huya(object):
         return self._parse_catecontent(content)
 
     def _parse_catecontent(self, content):
-        # TODO add comment
+        # TODO add comment & parse rule extraction
         cate_names = []
         cate_gameid = []
         cate_href = []

@@ -27,7 +27,7 @@ class Categories(object):
 
     def get(self, site):
         # TODO add comment
-        # choose site
+        # TODO operation for choosing site extract as method
         data = defaultdict(list)
         index = [[], []]
         if site is 'all':
