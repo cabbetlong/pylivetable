@@ -8,59 +8,44 @@ This module contains the models devided by different Live website.
 Each model provides parse method to get data we focus on from http response of it's corresponding site.
 '''
 
-from bs4 import BeautifulSoup
+from lxml import etree
 from .http import get_content
 
 
 class Douyu(object):
     # TODO add comment
+    SITE_NAME = 'douyu'
     CATEGORIES_URL = 'https://www.douyu.com/directory'
-
-    def get_categories(self):
-        # TODO add comment
-        # get html of http response
-        content = get_content(Douyu.CATEGORIES_URL)
-        return self._parse_catecontent(content)
-
-    def _parse_catecontent(self, content):
-        # TODO add comment & parse rule extraction
-        cate_names = []
-        cate_gameid = []
-        cate_href = []
-
-        soup = BeautifulSoup(content, 'lxml')
-        obj_nodes = soup.select('.unit a')
-        for a in obj_nodes:
-            cate_names.append(a.p.get_text())
-            cate_gameid.append(a['data-tid'])
-            cate_href.append(a['href'])
-
-        site_index = ['douyu' for _ in range(len(obj_nodes))]
-        return site_index, cate_names, cate_gameid, cate_href
+    CATES_PARSE_RULES = ['//*[@id="live-list-contentbox"]/li/a/p/text()',
+                        '//*[@id="live-list-contentbox"]/li/a/@data-tid',
+                        '//*[@id="live-list-contentbox"]/li/a/@href']
 
 
 class Huya(object):
     # TODO add comment &
+    SITE_NAME = 'huya'
     CATEGORIES_URL = 'https://www.huya.com/g'
+    CATES_PARSE_RULES = ['//*[@id="js-game-list"]/li/a/h3/text()',
+                         '//*[@id="js-game-list"]/li/@gid',
+                         '//*[@id="js-game-list"]/li/a/@href']
 
-    def get_categories(self):
-        # TODO add comment
-        # get html of http response
-        content = get_content(Huya.CATEGORIES_URL)
-        return self._parse_catecontent(content)
 
-    def _parse_catecontent(self, content):
-        # TODO add comment & parse rule extraction
-        cate_names = []
-        cate_gameid = []
-        cate_href = []
+SITES = {
+    'douyu': Douyu,
+    'huya': Huya,
+}
 
-        soup = BeautifulSoup(content, 'lxml')
-        obj_nodes = soup.select('.game-list-item')
-        for li in obj_nodes:
-            cate_names.append(li.a.h3.get_text())
-            cate_gameid.append(li['gid'])
-            cate_href.append(li.a['href'])
 
-        site_index = ['huya' for _ in range(len(obj_nodes))]
-        return site_index, cate_names, cate_gameid, cate_href
+def get_data(site):
+    site_cls = SITES[site]
+    content = get_content(site_cls.CATEGORIES_URL)
+    tree = etree.HTML(content)
+    for parse_rule in site_cls.CATES_PARSE_RULES:
+        print(len(tree.xpath(parse_rule)))
+        yield tree.xpath(parse_rule)
+
+    yield [site for _ in range(len(tree.xpath(parse_rule)))]
+
+
+def iter_sites():
+    for site in SITES: yield site

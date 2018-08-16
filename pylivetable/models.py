@@ -10,14 +10,7 @@ This module contains the base models which integrate the data from Live website 
 from functools import reduce
 
 import pandas as pd
-from .livesites import Douyu, Huya
-from collections import defaultdict
-
-
-SITES = {
-    'douyu': Douyu,
-    'huya': Huya,
-}
+from .livesites import iter_sites, get_data
 
 
 def _gen_idx(site_idx):
@@ -54,17 +47,12 @@ class Categories(object):
     def get(self, site):
         # TODO add comment
         if site is 'all':
-            all_data = [SITES[_site]().get_categories()
-                        for _site in SITES]
-            site_idx, *data = reduce(_gendata_forall, all_data)
+            all_data = [tuple(get_data(_site))
+                        for _site in iter_sites()]
+            *data, site_idx = reduce(_gendata_forall, all_data)
         else:
-            site_idx, *data = SITES[site]().get_categories()
+            *data, site_idx = tuple(get_data(site))
 
-        return self._gen_dataframe(
+        return pd.DataFrame(
             dict(zip(Categories.COLUMNS, data)),  # integrate data as a dict used for pandas.DataFrame
             _gen_idx(site_idx))
-
-    def _gen_dataframe(self, data, index):
-        # TODO add comment
-        cate_df = pd.DataFrame(data, index=index)
-        return cate_df

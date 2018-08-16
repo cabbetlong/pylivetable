@@ -11,20 +11,18 @@ import pylivetable
 
 class TestRequests:
     # TODO add comment
-    def test_categories(self, site):
-        # TODO add comment
-        categories = pylivetable.categories(site)
-        assert isinstance(categories, pd.DataFrame)
-        assert len(categories) > 0
-        return True
 
     def test_categories_douyu(self):
         # TODO add comment
-        assert self.test_categories('douyu')
+        categories = pylivetable.categories('douyu')
+        assert isinstance(categories, pd.DataFrame)
+        assert len(categories) > 0
 
     def test_categories_huya(self):
         # TODO add comment
-        assert self.test_categories('huya')
+        categories = pylivetable.categories('huya')
+        assert isinstance(categories, pd.DataFrame)
+        assert len(categories) > 0
 
     def test_categories_all(self):
         # TODO add comment
