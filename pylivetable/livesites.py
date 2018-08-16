@@ -29,12 +29,14 @@ class Douyu(object):
         cate_href = []
 
         soup = BeautifulSoup(content, 'lxml')
-        for a in soup.select('.unit a'):
+        obj_nodes = soup.select('.unit a')
+        for a in obj_nodes:
             cate_names.append(a.p.get_text())
             cate_gameid.append(a['data-tid'])
             cate_href.append(a['href'])
 
-        return cate_names, cate_gameid, cate_href
+        site_index = ['douyu' for _ in range(len(obj_nodes))]
+        return site_index, cate_names, cate_gameid, cate_href
 
 
 class Huya(object):
@@ -54,9 +56,11 @@ class Huya(object):
         cate_href = []
 
         soup = BeautifulSoup(content, 'lxml')
-        for li in soup.select('.game-list-item'):
+        obj_nodes = soup.select('.game-list-item')
+        for li in obj_nodes:
             cate_names.append(li.a.h3.get_text())
             cate_gameid.append(li['gid'])
             cate_href.append(li.a['href'])
 
-        return cate_names, cate_gameid, cate_href
+        site_index = ['huya' for _ in range(len(obj_nodes))]
+        return site_index, cate_names, cate_gameid, cate_href
