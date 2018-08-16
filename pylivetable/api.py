@@ -11,7 +11,11 @@ from .models import Categories
 
 
 def categories(site='all'):
-    # TODO add comment
+    '''
+    Get categories from Live website
+    :param site: Live website name
+    :return: categories table which type is pandas.DataFrame
+    '''
     cate = Categories()
     return cate.get(site)
 

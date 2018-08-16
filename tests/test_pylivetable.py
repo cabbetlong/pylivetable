@@ -1,32 +1,33 @@
 # -*- coding: utf-8 -*-
-# TODO add comment
+
 
 import sys
 sys.path.append(r'../pylivetable')
 
 import pandas as pd
 
-import pylivetable
+from pylivetable import categories
+from pylivetable.livesites import iter_sites
 
 
-class TestRequests:
-    # TODO add comment
+class TestPylivetable:
+    '''
+    Test class for pylivetable
+    '''
 
-    def test_categories_douyu(self):
-        # TODO add comment
-        categories = pylivetable.categories('douyu')
-        assert isinstance(categories, pd.DataFrame)
-        assert len(categories) > 0
-
-    def test_categories_huya(self):
-        # TODO add comment
-        categories = pylivetable.categories('huya')
-        assert isinstance(categories, pd.DataFrame)
-        assert len(categories) > 0
+    def test_categories_single_site(self):
+        '''
+        Test pylivetable.categories when param :site is single site
+        '''
+        for site in iter_sites():
+            res = categories(site)
+            assert isinstance(res, pd.DataFrame)
+            assert len(res) > 0
 
     def test_categories_all(self):
-        # TODO add comment
-        res = pylivetable.categories()
-        print(res)
-        assert len(res.loc['douyu']) == len(pylivetable.categories('douyu'))
-        assert len(res.loc['huya']) == len(pylivetable.categories('huya'))
+        '''
+        Test pylivetable.categories when param :site 'all'
+        '''
+        res = categories()
+        for site in iter_sites():
+            assert len(res.loc[site]) == len(categories(site))

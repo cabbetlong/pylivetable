@@ -11,7 +11,11 @@ import requests as rq
 
 
 def get_content(url):
-    # TODO add comment
+    '''
+    Get text of http response by requests lib.
+    :param url: Specific url which can get data.
+    :return: text of http response.
+    '''
     try:
         return rq.get(url).text
     except Exception as e:

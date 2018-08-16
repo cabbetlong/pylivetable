@@ -13,7 +13,9 @@ from .http import get_content
 
 
 class Douyu(object):
-    # TODO add comment
+    '''
+    Config of douyu site
+    '''
     SITE_NAME = 'douyu'
     CATEGORIES_URL = 'https://www.douyu.com/directory'
     CATES_PARSE_RULES = ['//*[@id="live-list-contentbox"]/li/a/p/text()',
@@ -22,7 +24,9 @@ class Douyu(object):
 
 
 class Huya(object):
-    # TODO add comment &
+    '''
+    Config of huya site
+    '''
     SITE_NAME = 'huya'
     CATEGORIES_URL = 'https://www.huya.com/g'
     CATES_PARSE_RULES = ['//*[@id="js-game-list"]/li/a/h3/text()',
@@ -30,14 +34,16 @@ class Huya(object):
                          '//*[@id="js-game-list"]/li/a/@href']
 
 
-SITES = {
+_SITES = {
     'douyu': Douyu,
     'huya': Huya,
 }
 
 
-def get_data(site):
-    site_cls = SITES[site]
+def get_cate_data(site):
+    # TODO add comment
+
+    site_cls = _SITES[site]
     content = get_content(site_cls.CATEGORIES_URL)
     tree = etree.HTML(content)
     for parse_rule in site_cls.CATES_PARSE_RULES:
@@ -48,4 +54,8 @@ def get_data(site):
 
 
 def iter_sites():
-    for site in SITES: yield site
+    '''
+    Iterate SITES
+    :return: generator of SITES
+    '''
+    for site in _SITES: yield site
