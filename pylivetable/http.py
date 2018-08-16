@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-# TODO add comment
+
+'''
+pylivetable.http
+~~~~~~~~~~~~~~~~
+
+This module provides methods to get http response by requests lib.
+'''
 
 import requests as rq
 

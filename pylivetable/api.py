@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-# TODO add comment
+
+'''
+pylivetable.api
+~~~~~~~~~~~~~~~
+
+This module implements the pylivetable API.
+'''
 
 from .models import Categories
 

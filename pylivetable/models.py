@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
-# TODO add comment
+
+'''
+pylivetable.models
+~~~~~~~~~~~~~~~~~~
+
+This module contains the base models which integrate the data from Live website to pandas.DataFrame.
+'''
 
 import pandas as pd
 from .livesites import Douyu, Huya

@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-# TODO add comment
+
+'''
+pylivetable.livesites
+~~~~~~~~~~~~~~~~~~~~~
+
+This module contains the models devided by different Live website.
+Each model provides parse method to get data we focus on from http response of it's corresponding site.
+'''
 
 from bs4 import BeautifulSoup
 from .http import get_content
