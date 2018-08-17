@@ -10,6 +10,7 @@ This module contains the base models which integrate the data from Live website 
 from functools import reduce
 
 import pandas as pd
+import numpy as np
 from .livesites import iter_sites, get_cate_data
 
 
@@ -19,7 +20,10 @@ def _gen_idx(site_idx):
     :param site_idx: site index genrated by model of livesites.
     :return: index for pandas.DataFrame
     '''
-    return [site_idx, [i for i in range(len(site_idx))]]
+    now = pd.datetime.now()
+    return [site_idx,
+            np.full(len(site_idx), now),
+            np.arange(len(site_idx))]
 
 
 def _gendata_forall(last, pre):
@@ -41,11 +45,17 @@ def _gendata_forall(last, pre):
 
 
 class Categories(object):
-    # TODO add comment
+    '''
+    To integrate data of categories from lists to pandas.DataFrame.
+    '''
     COLUMNS = ['name', 'game_id', 'href']
 
     def get(self, site):
-        # TODO add comment
+        '''
+        Get categories table which type is pandas.DataFrame.
+        :param site: Live website
+        :return: pandas.DataFrame
+        '''
         if site is 'all':
             all_data = [tuple(get_cate_data(_site))
                         for _site in iter_sites()]

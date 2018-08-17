@@ -41,13 +41,15 @@ _SITES = {
 
 
 def get_cate_data(site):
-    # TODO add comment
-
+    '''
+    Get categories data.
+    :param site: Live Website
+    :return: each column data as a list
+    '''
     site_cls = _SITES[site]
     content = get_content(site_cls.CATEGORIES_URL)
     tree = etree.HTML(content)
     for parse_rule in site_cls.CATES_PARSE_RULES:
-        print(len(tree.xpath(parse_rule)))
         yield tree.xpath(parse_rule)
 
     yield [site for _ in range(len(tree.xpath(parse_rule)))]
