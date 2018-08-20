@@ -11,7 +11,7 @@ from functools import reduce
 
 import pandas as pd
 import numpy as np
-from .livesites import iter_sites, get_cate_data
+from .livesites import iter_sites, get_cates_data
 
 
 def _gen_idx(site_idx):
@@ -50,18 +50,18 @@ class Categories(object):
     '''
     COLUMNS = ['name', 'game_id', 'href']
 
-    def get(self, site):
+    def get(self, site, top):
         '''
         Get categories table which type is pandas.DataFrame.
         :param site: Live website
         :return: pandas.DataFrame
         '''
         if site is 'all':
-            all_data = [tuple(get_cate_data(_site))
+            all_data = [tuple(get_cates_data(_site))
                         for _site in iter_sites()]
             *data, site_idx = reduce(_gendata_forall, all_data)
         else:
-            *data, site_idx = tuple(get_cate_data(site))
+            *data, site_idx = tuple(get_cates_data(site))
 
         return pd.DataFrame(
             dict(zip(Categories.COLUMNS, data)),  # integrate data as a dict used for pandas.DataFrame
